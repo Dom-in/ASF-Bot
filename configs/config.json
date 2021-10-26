@@ -1,0 +1,11 @@
+{
+    "bot" : {
+        "token" : "Here you put you're discord bot's token",
+        "prefix" : "Here you put you're discord bot's prefix you want to use"
+    },
+    "secruity" : {
+        "UID": "Here you put you're discord's User ID so only you can execute commands",
+        "IP" : "Here you put you're ASF panel IP:PORT",
+        "ASF_PASSWORD" : "Here you put you're ASF password"
+    }
+}
