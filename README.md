@@ -1,7 +1,7 @@
 # ASF-Bot
 
 ### Discord Bot coded in JavaScript to control your ASF instance.
-Control your ASF instance anywhere.
+Control your ASF instance by discord.
 
 [![Discord](https://img.shields.io/discord/902138867199643679?color=7289da&label=Discord&logo=discord&logoColor=ffffff)](https://discord.gg/m2jM5zGKCk)
 
