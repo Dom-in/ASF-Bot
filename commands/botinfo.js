@@ -46,7 +46,7 @@ module.exports = {
                 IsConnectedAndLoggedOn = "No"
             }
 
-            const response = await fetch('http://51.255.159.108:1242/swagger/ASF/swagger.json');
+            const response = await fetch('http://'+config.secruity.IP+'/swagger/ASF/swagger.json');
             const codes = await response.json();
             let CurrencyMarks = codes.components.schemas['SteamKit2.ECurrencyCode']['x-definition']
 
