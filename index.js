@@ -5,7 +5,6 @@ const client = new Discord.Client({
 });
 const Enmap = require('enmap')
 const fs = require('fs')
-const modules = require('./modules.js')
 const fetch = require('node-fetch');
 
 //Can be Changed/Updated
@@ -65,7 +64,7 @@ client.on("message", async (message) => {
         } else {
 
                 let commandfile = client.commands.get(cmd.slice(prefix.length));
-                if (commandfile) commandfile.run(client, message, args, modules, BotVersion);
+                if (commandfile) commandfile.run(client, message, args, BotVersion);
         }
         })
 })

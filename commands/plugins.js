@@ -4,7 +4,7 @@ const fetch = require('node-fetch');
 
 module.exports = {
     name: "botinfo",
-    run: async (bot, message, args, modules, BotVersion) => {
+    run: async (bot, message, args, BotVersion) => {
         fetch('http://'+config.secruity.IP+'/Api/Plugins?password='+config.secruity.ASF_PASSWORD)
         .then(res => res.json())
         .then(json => {

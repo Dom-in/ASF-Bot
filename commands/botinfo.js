@@ -1,15 +1,15 @@
 const Discord = require('discord.js');
 const config = require("../configs/config.json");
 const fetch = require('node-fetch');
-const { NumberToCurrency } = require('../currency.json')
+
 module.exports = {
     name: "botinfo",
-    run: async (bot, message, args, modules, BotVersion) => {
+    run: async (bot, message, args, BotVersion) => {
         let name = args[0]
         if(!name) return message.channel.send('**[ERROR]** You did not mention bots name!');
         fetch('http://'+config.secruity.IP+'/Api/Bot/'+name+'?password='+config.secruity.ASF_PASSWORD)
         .then(res => res.json())
-        .then(json => {
+        .then(async json => {
         if(!json.Result[name]) return message.channel.send('**[ERROR]** '+name+' is not a valid bots name!');
         let data = json.Result[name]
         
@@ -45,11 +45,15 @@ module.exports = {
             } else {
                 IsConnectedAndLoggedOn = "No"
             }
+
+            const response = await fetch('http://51.255.159.108:1242/swagger/ASF/swagger.json');
+            const codes = await response.json();
+            let CurrencyMarks = codes.components.schemas['SteamKit2.ECurrencyCode']['x-definition']
+
         //Stop BotInfo Functions
-            console.log(data)
         const BotInfo = new Discord.MessageEmbed()
             .setAuthor(data.BotName, `https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/31/${data.AvatarHash}_full.jpg`)
-            .addField('__**Bot Info**__', `Balance: ${data.WalletBalance/100} ${NumberToCurrency[data.WalletCurrency]}\nOnline: ${IsConnectedAndLoggedOn}\nRedeem In Background: ${data.GamesToRedeemInBackgroundCount}\nMobile Authenticator: ${HasMobileAuthenticator}`, true)
+            .addField('__**Bot Info**__', `Balance: ${data.WalletBalance/100} ${Object.keys(CurrencyMarks).find(value => CurrencyMarks[value] === data.WalletCurrency)}\nOnline: ${IsConnectedAndLoggedOn}\nRedeem In Background: ${data.GamesToRedeemInBackgroundCount}\nMobile Authenticator: ${HasMobileAuthenticator}`, true)
             .addField('__**Card Farming**__', `Current Game: ${CurrentGamesFarming}\nGame Play Time: ${TPT}\nTotal Time Remaining: ${TimeRemaining}\nPaused: ${Paused}`, true)
             .setColor('AQUA')
             .setTimestamp()
