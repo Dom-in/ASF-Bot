@@ -8,7 +8,7 @@ const fs = require('fs')
 const fetch = require('node-fetch');
 
 //Can be Changed/Updated
-const RconCommandsUse = ['redeem', 'addlicense', 'pause', 'stop', 'start', 'resume', 'restart', 'update', 'play'];
+const RconCommandsUse = ['redeem', 'addlicense', 'pause', 'stop', 'start', 'resume', 'restart', 'update', 'play', 'commands', 'version', 'balance', 'stats'];
 const BotVersion = 'v0.0.1'
 //Can be Changed/Updated
 
