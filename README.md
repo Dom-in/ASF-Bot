@@ -27,4 +27,4 @@ So to start you have to configure youre config.json file
 ```
 
 Once the bot has started and connected to the ASF instance, you can send commands through your discord servers. 
-The bot also allows to redeem steam keys. It will automatically parse every key and activate them on your accounts with ```!redeem {ACCOUNT} {KEYS_HERE}``` notifying you the process.
+The bot also allows to redeem steam keys. It will automatically parse every key and activate them on your accounts with ```!redeem {ACCOUNT} {KEYS_HERE}``` notifying you in the process.
