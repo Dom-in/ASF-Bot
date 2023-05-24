@@ -13,16 +13,18 @@ So to start you have to configure youre config.json file
 ```
 {
     "bot" : {
-        "token" : "Here you put you're discord bot's token",
-        "prefix" : "Here you put you're discord bot's prefix you want to use"
+        "token" : "Here you put your discord bot's token",
+        "prefix" : "Here you put your discord bot's prefix you want to use"
     },
     "secruity" : {
-        "UID": "Here you put you're discord's User ID so only you can execute commands",
-        "IP" : "Here you put you're ASF panel IP:PORT",
-        "ASF_PASSWORD" : "Here you put you're ASF password"
+        "BID": "1041398379667804193",
+        "BCID": "Here you put your discord's FreeStuff Bots Channel ID",
+        "UID": "Here you put your discord's User ID so only you can execute commands",
+        "IP" : "Here you put your ASF panel IP:PORT",
+        "ASF_PASSWORD" : "Here you put your ASF password"
     }
 }
 ```
 
-Once the bot has started and connected to the ASF instance, you can send commands through your discord servers where youre bot. 
-The bot also allows to redeem steam keys. It will automatically parse every key and activate them on your accounts with ```!redeem {ACCOUNT} {KEYS_HERE}``` notifying you the process.
+Once the bot has started and connected to the ASF instance, you can send commands through your discord servers. 
+The bot also allows to redeem steam keys. It will automatically parse every key and activate them on your accounts with ```!redeem {ACCOUNT} {KEYS_HERE}``` notifying you in the process.
