@@ -25,11 +25,11 @@ client.on('interactionCreate', async (interaction) => {
         if (!interaction.isChatInputCommand()) return;
 
         if (interaction.commandName === 'ping') {
-                await interaction.reply('Pong!');
-        }
-
-        if (interaction.commandName === 'test') {
-                await interaction.reply(`${client.user.avatar}`);
+                const startTimestamp = Date.now();
+                await interaction.reply('Pinging...').then(async (pingMessage) => {
+                        const latency = Date.now() - startTimestamp;
+                        await pingMessage.edit(`Pong! The bot's latency is ${latency}ms.`);
+                });
         }
 
         if (interaction.commandName === 'asf') {
@@ -158,5 +158,3 @@ client.on("messageCreate", async (message) => {
 
 
 client.login(config.client.token);
-
-

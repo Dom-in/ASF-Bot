@@ -1,14 +1,12 @@
 const { REST, Routes } = require('discord.js');
 const config = require('./configs/config.json');
 
+//const RconCommandsUse = ['redeem', 'addlicense', 'pause', 'stop', 'start', 'resume', 'restart', 'update', 'play', 'commands', 'version', 'balance', 'stats'];
+
 const commands = [
     {
         name: 'ping',
         description: 'pong!',
-    },
-    {
-        name: 'test',
-        description: 'test!',
     },
     {
         name: 'asf',
@@ -16,9 +14,8 @@ const commands = [
     },
     {
         name: 'version',
-        description: 'ASF-Version!',
+        description: 'Bot-version!',
     }
-
 ];
 
 const rest = new REST({ version: '10' }).setToken(config.client.token);
