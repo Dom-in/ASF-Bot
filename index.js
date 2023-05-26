@@ -1,8 +1,7 @@
 const Discord = require('discord.js');
 const config = require('./configs/config.json');
-const client = new Discord.Client({
-        intents: ["GUILDS", "GUILD_MEMBERS", "GUILD_BANS", "GUILD_EMOJIS_AND_STICKERS", "GUILD_INTEGRATIONS", "GUILD_INVITES", "GUILD_VOICE_STATES", "GUILD_PRESENCES", "GUILD_MESSAGES", "GUILD_MESSAGE_REACTIONS", "DIRECT_MESSAGES"]
-});
+const client = new Discord.Client({ intents: 34815 });
+
 const Enmap = require('enmap')
 const fs = require('fs')
 const fetch = require('node-fetch');
@@ -10,29 +9,43 @@ const re1 = /.*addlicense\sasf\s(s\/\d+(?:,\s)?)*/;
 
 //Can be Changed/Updated
 const RconCommandsUse = ['redeem', 'addlicense', 'pause', 'stop', 'start', 'resume', 'restart', 'update', 'play', 'commands', 'version', 'balance', 'stats'];
-const BotVersion = 'v0.0.1'
+const BotVersion = 'v0.0.3'
 //Can be Changed/Updated
 
-client.once('ready', () => {
-        console.log('[ASF-Bot] I am ready!');
 
-        client.commands = new Enmap();
-        fs.readdir("./commands/", (err, files) => {
-                if (err) return console.error(err);
-                files.forEach((file) => {
-                        if (!file.endsWith(".js")) return;
-                        let props = require(`./commands/${file}`);
-                        let commandName = file.split(".")[0];
-                        client.commands.set(commandName, props);
-                });
-        });
+
+client.once('ready', (c) => {
+
+        console.log(`[${c.user.username}] I am ready!`);
+});
+
+
+
+client.on('interactionCreate', async (interaction) => {
+        if (!interaction.isChatInputCommand()) return;
+
+        if (interaction.commandName === 'ping') {
+                await interaction.reply('Pong!');
+        }
+
+        if (interaction.commandName === 'test') {
+                await interaction.reply(`${client.user.avatar}`);
+        }
+
+        if (interaction.commandName === 'asf') {
+                await interaction.reply(`${RconCommandsUse}`);
+        }
+
+        if (interaction.commandName === 'version') {
+                await interaction.reply(`${BotVersion}`);
+        }
 });
 
 
 client.on("messageCreate", async (message) => {
         if (!message.author.bot) return;
-        if (message.author.id != config.secruity.BID) return;
-        if (message.channel.id != config.secruity.BCID) return;
+        if (message.author.id != config.fsbot.ID) return;
+        if (message.channel.id != config.fsbot.CHANNEL_ID) return;
         for (let i = 0; i < message.embeds.length; i++) {
                 if (message.embeds[i].description === undefined) return;
                 if (message.embeds[i].description.includes("addlicense") && message.embeds[i].description.includes("Steam")) {
@@ -51,12 +64,17 @@ client.on("messageCreate", async (message) => {
                                         }).then(res => res.json())
                                                 .then(body => {
                                                         if (body.Success) {
-                                                                const RconModuleEmbed = new Discord.MessageEmbed()
-                                                                        .setColor('AQUA')
-                                                                        .setAuthor('ASF-BOT Rcon Commands')
+                                                                const RconModuleEmbed = new Discord.EmbedBuilder()
+                                                                        .setColor('#00ffff')
+                                                                        .setAuthor({
+                                                                                name: "ASF-BOT Rcon Commands"
+                                                                        })
                                                                         .setDescription(body.Result)
-                                                                        .setTimestamp()
-                                                                        .setFooter(`ASF-Bot ${BotVersion}`, 'https://cdn.discordapp.com/avatars/552551262122672150/3b937f1ec3af7ce2a6d0265f7afc3522.webp?size=512');
+                                                                        .setTimestamp(Date.now())
+                                                                        .setFooter({
+                                                                                text: `ASF-Bot ${BotVersion}`,
+                                                                                iconURL: `https://cdn.discordapp.com/avatars/${config.client.ID}/${client.user.avatar}.webp?size=512`
+                                                                        });
                                                                 message.channel.send({ embeds: [RconModuleEmbed] });
 
                                                         } else {
@@ -93,9 +111,9 @@ client.on("messageCreate", async (message) => {
 
 client.on("messageCreate", async (message) => {
         if (message.author.bot) return;
-        if (!message.author.id == config.secruity.UID) return;
+        if (!message.author.id == config.secruity.USER_ID) return;
         if (message.channel.type === "dm") return;
-        let prefix = config.bot.prefix;
+        let prefix = config.client.prefix;
         let messageArray = message.content.split(" ");
         let cmd = messageArray[0].toLowerCase();
         let args = messageArray.slice(1);
@@ -112,12 +130,17 @@ client.on("messageCreate", async (message) => {
                 }).then(res => res.json())
                         .then(body => {
                                 if (body.Success) {
-                                        const RconModuleEmbed = new Discord.MessageEmbed()
-                                                .setColor('AQUA')
-                                                .setAuthor('ASF-BOT Rcon Commands')
+                                        const RconModuleEmbed = new Discord.EmbedBuilder()
+                                                .setColor('#00ffff')
+                                                .setAuthor({
+                                                        name: "ASF-BOT Rcon Commands"
+                                                })
                                                 .setDescription(body.Result)
-                                                .setTimestamp()
-                                                .setFooter(`ASF-Bot ${BotVersion}`, 'https://cdn.discordapp.com/icons/267292556709068800/49f0d4a116dfab2b6c5ad92c079c9070.png?size=512');
+                                                .setTimestamp(Date.now())
+                                                .setFooter({
+                                                        text: `ASF-Bot ${BotVersion}`,
+                                                        iconURL: `https://cdn.discordapp.com/avatars/${config.client.ID}/${client.user.avatar}.webp?size=512`
+                                                });
                                         message.channel.send({ embeds: [RconModuleEmbed] });
 
                                 } else {
@@ -134,6 +157,6 @@ client.on("messageCreate", async (message) => {
 
 
 
+client.login(config.client.token);
 
 
-client.login(config.bot.token);
