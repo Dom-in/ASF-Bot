@@ -12,19 +12,24 @@ ASF support server:<br>
 So to start you have to configure youre config.json file
 ```
 {
-    "bot" : {
-        "token" : "Here you put your discord bot's token",
-        "prefix" : "Here you put your discord bot's prefix you want to use"
+    "client" : {
+        "token" : "Bot token",
+        "prefix" : "Bot prefix",
+        "ID" : "Bot ID"
     },
     "secruity" : {
-        "BID": "1041398379667804193",
-        "BCID": "Here you put your discord's FreeStuff Bots Channel ID",
-        "UID": "Here you put your discord's User ID so only you can execute commands",
+        "USER_ID": "Your own user id",
+        "GUILD_ID": "The Guild ID you want to use the Bot at",
         "IP" : "Here you put your ASF panel IP:PORT",
         "ASF_PASSWORD" : "Here you put your ASF password"
+    },
+    "fsbot" : {
+        "ID": "1041398379667804193",
+        "CHANNEL_ID": "FreeStuff Bot channel ID"
     }
 }
 ```
 
-Once the bot has started and connected to the ASF instance, you can send commands through your discord servers. 
-The bot also allows to redeem steam keys. It will automatically parse every key and activate them on your accounts with ```!redeem {ACCOUNT} {KEYS_HERE}``` notifying you in the process.
+Run run.js for the Bot to start.
+Once the slash commands are registered and the bot has started and connected to the ASF instance, you can send commands through your Discord server.
+The bot also allows you to redeem Steam keys. It will automatically parse each key and activate them on your accounts, notifying you along the way with ```{prefix}redeem {ACCOUNT} {KEYS_HERE}```.

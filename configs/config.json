@@ -1,13 +1,17 @@
 {
-    "bot" : {
-        "token" : "Here you put your discord bot's token",
-        "prefix" : "Here you put your discord bot's prefix you want to use"
+    "client" : {
+        "token" : "Bot token",
+        "prefix" : "Bot prefix",
+        "ID" : "Bot ID"
     },
     "secruity" : {
-        "BID": "1041398379667804193",
-        "BCID": "Here you put your discord's FreeStuff Bots Channel ID",
-        "UID": "Here you put your discord's User ID so only you can execute commands",
+        "USER_ID": "Your own user id",
+        "GUILD_ID": "The Guild ID you want to use the Bot at",
         "IP" : "Here you put your ASF panel IP:PORT",
         "ASF_PASSWORD" : "Here you put your ASF password"
+    },
+    "fsbot" : {
+        "ID": "1041398379667804193",
+        "CHANNEL_ID": "FreeStuff Bot channel ID"
     }
 }
