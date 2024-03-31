@@ -8,7 +8,7 @@
         "USER_ID": "Your own user id",
         "GUILD_ID": "The Guild ID you want to use the Bot at",
         "IP" : "Here you put your ASF panel IP:PORT",
-        "ASF_PASSWORD" : "Here you put your ASF password"
+        "IPC_PASSWORD" : "Here you put your IPC ASF password"
     },
     "fsbot" : {
         "ID": "1041398379667804193",

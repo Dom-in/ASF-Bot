@@ -5,7 +5,7 @@ const client = new Discord.Client({ intents: 34815 });
 const Enmap = require('enmap')
 const fs = require('fs')
 const fetch = require('node-fetch');
-const re1 = /.*addlicense\sasf\s(s\/\d+(?:,\s)?)*/;
+const re1 = /addlicense\sasf\s(s\/\d+(?:,\s)?)*/;
 
 //Can be Changed/Updated
 const RconCommandsUse = ['redeem', 'addlicense', 'pause', 'stop', 'start', 'resume', 'restart', 'update', 'play', 'commands', 'version', 'balance', 'stats'];
@@ -24,20 +24,22 @@ client.once('ready', (c) => {
 client.on('interactionCreate', async (interaction) => {
         if (!interaction.isChatInputCommand()) return;
 
-        if (interaction.commandName === 'ping') {
-                const startTimestamp = Date.now();
-                await interaction.reply('Pinging...').then(async (pingMessage) => {
-                        const latency = Date.now() - startTimestamp;
-                        await pingMessage.edit(`Pong! The bot's latency is ${latency}ms.`);
-                });
-        }
+        switch (interaction.commandName) {
+                case 'ping':
+                        const startTimestamp = Date.now();
+                        await interaction.reply('Pinging...').then(async (pingMessage) => {
+                                const latency = Date.now() - startTimestamp;
+                                await pingMessage.edit(`Pong! The bot's latency is ${latency}ms.`);
+                        });
+                        break;
 
-        if (interaction.commandName === 'asf') {
-                await interaction.reply(`${RconCommandsUse}`);
-        }
+                case 'asf':
+                        await interaction.reply(`${RconCommandsUse}`);
+                        break;
 
-        if (interaction.commandName === 'version') {
-                await interaction.reply(`${BotVersion}`);
+                case 'version':
+                        await interaction.reply(`${BotVersion}`);
+                        break;
         }
 });
 
@@ -57,7 +59,7 @@ client.on("messageCreate", async (message) => {
                                         console.log(cmd);
                                         let command = { Command: cmdd[0].slice() }
                                         console.log(JSON.stringify(command));
-                                        fetch("http://" + config.secruity.IP + "/Api/Command?password=" + config.secruity.ASF_PASSWORD, {
+                                        fetch("http://" + config.secruity.IP + "/Api/Command?password=" + config.secruity.IPC_PASSWORD, {
                                                 method: "post",
                                                 body: JSON.stringify(command),
                                                 headers: { "Content-Type": "application/json" }
@@ -123,7 +125,7 @@ client.on("messageCreate", async (message) => {
         if (RconCommandsUse.includes(cmd.slice(prefix.length))) {
                 let command = { Command: message.content.slice(prefix.length) }
                 console.log(command);
-                fetch("http://" + config.secruity.IP + "/Api/Command?password=" + config.secruity.ASF_PASSWORD, {
+                fetch("http://" + config.secruity.IP + "/Api/Command?password=" + config.secruity.IPC_PASSWORD, {
                         method: "post",
                         body: JSON.stringify(command),
                         headers: { "Content-Type": "application/json" }
