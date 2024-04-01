@@ -4,7 +4,7 @@
 Control your ASF instance by discord.
 
 ASF support server:<br>
-[![Discord](https://img.shields.io/discord/267292556709068800.svg?label=Discord&logo=discord&cacheSeconds=3600)](https://discord.gg/hSQgt8j)
+[![Discord](https://img.shields.io/discord/267292556709068800.svg?label=Discord&logo=discord&cacheSeconds=3600)](https://discord.gg/hSQgt8j)<br>
 Free-Stuff-Bot support server:<br>
 [![Discord](https://img.shields.io/discord/517009303203479572.svg?logo=discord&label=Discord&cacheSeconds=3600)](https://discord.gg/WrnKKF8)<br>
 
