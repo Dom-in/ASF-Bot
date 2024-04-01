@@ -25,7 +25,7 @@ client.once('ready', (c) => {
 
 
 client.on('interactionCreate', async (interaction) => {
-        if (!interaction.user.id != config.secruity.USER_ID) return;
+        if (interaction.user.id != config.secruity.USER_ID) return;
         if (!interaction.isChatInputCommand()) return;
 
         let result;
