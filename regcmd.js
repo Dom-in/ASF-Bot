@@ -1,38 +1,34 @@
 const { REST, Routes } = require('discord.js');
 const config = require('./configs/config.json');
-
-//const RconCommandsUse = ['redeem', 'addlicense', 'pause', 'stop', 'start', 'resume', 'restart', 'update', 'play', 'commands', 'version', 'balance', 'stats'];
-
-const commands = [
-    {
-        name: 'ping',
-        description: 'pong!',
-    },
-    {
-        name: 'asf',
-        description: 'list all ASF commands!',
-    },
-    {
-        name: 'version',
-        description: 'Bot-version!',
-    }
-];
+const fs = require('fs');
 
 const rest = new REST({ version: '10' }).setToken(config.client.token);
 
-(async () => {
-    try {
-        await rest.put(
-            Routes.applicationGuildCommands(
-                config.client.ID,
-                config.secruity.GUILD_ID
-            ),
-            { body: commands }
-        );
-        process.exit(0);
-
-    } catch (error) {
-        console.error(`${error}`)
+// Read the JSON file
+fs.readFile('./configs/commands.json', 'utf8', (err, data) => {
+    if (err) {
+        console.error('Error reading file:', err);
         process.exit(1);
     }
-})();
+
+    // Parse the JSON data into a JavaScript object
+    const commands = JSON.parse(data);
+
+    // Use the commands in the rest.put() call
+    (async () => {
+        try {
+            await rest.put(
+                Routes.applicationGuildCommands(
+                    config.client.ID,
+                    config.secruity.GUILD_ID
+                ),
+                { body: commands }
+            );
+            process.exit(0);
+
+        } catch (error) {
+            console.error(`${error}`)
+            process.exit(1);
+        }
+    })();
+});
