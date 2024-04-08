@@ -18,6 +18,7 @@ So to start you have to configure youre config.json file
     },
     "secruity" : {
         "USER_ID": "Your own user id",
+        "GUILD_ID": "Your own guild id",
         "IP" : "Here you put your ASF panel IP:PORT",
         "IPC_PASSWORD" : "Here you put your ASF IPC password"
     },
