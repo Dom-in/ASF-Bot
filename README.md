@@ -8,7 +8,7 @@ This bot is still in development we are still making it more optymalized and hav
 
 ### Roadmap
 ✔️Finish the main code of the bot<br>
-❌Add leaderboard system where people can see the leaderboard rank they have on country rank<br>
+✔️Add leaderboard system where people can see the leaderboard rank they have on country rank<br>
 ❌Create something called `RECALL SYSTEM` something that only the community staff can use to stop all bots if there is problem with something big like data leaks or other stuff + Auto update (This thing will be public so everyone can see what is proccesed)<br>
 ❌All stuff that is based in ASF api<br>
 ❌RCon commands<br>

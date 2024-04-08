@@ -7,5 +7,9 @@
     "SteamLadder" : {
         "API" : "STEAM_LADDER_API_KEY",
         "MainBot" : "YOUR_STEAM_HEX_ID"
+    },
+    "ASF_SETTINGS" : {
+        "IP" : "IP:PORT",
+        "Password" : "PASSWORD_FOR_ASF_IPC"
     }
 }
