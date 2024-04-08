@@ -1,0 +1,11 @@
+{
+    "Bot" : {
+        "token" : "BOT_TOKEN",
+        "discord_id" : "DISCORD_GUILD_ID",
+        "color" : "0x0099FF"
+    },
+    "SteamLadder" : {
+        "API" : "STEAM_LADDER_API_KEY",
+        "MainBot" : "YOUR_STEAM_HEX_ID"
+    }
+}
