@@ -113,10 +113,13 @@ client.on("messageCreate", async (message) => {
 
                                 let command = { Command: cmdd[0].slice() }
 
-                                fetch("https://" + config.secruity.IP + "/Api/Command?password=" + config.secruity.IPC_PASSWORD, {
+                                fetch("https://" + config.secruity.IP + "/Api/Command", {
                                         method: "post",
                                         body: JSON.stringify(command),
-                                        headers: { "Content-Type": "application/json" }
+                                        headers: {
+                                                "Content-Type": "application/json",
+                                                "Authentication": config.secruity.IPC_PASSWORD
+                                        }
                                 }).then(res => res.json())
                                         .then(body => {
                                                 if (body.Success) {
@@ -171,10 +174,13 @@ client.on("messageCreate", async (message) => {
 
 async function IPCsend(data) {
         try {
-                let response = await fetch("https://" + config.secruity.IP + "/Api/Command?password=" + config.secruity.IPC_PASSWORD, {
+                let response = await fetch("https://" + config.secruity.IP + "/Api/Command", {
                         method: "post",
                         body: JSON.stringify({ Command: data }),
-                        headers: { "Content-Type": "application/json" }
+                        headers: {
+                                "Content-Type": "application/json",
+                                "Authentication": config.secruity.IPC_PASSWORD
+                        }
                 });
                 let body = await response.json();
                 if (body.Success) {
