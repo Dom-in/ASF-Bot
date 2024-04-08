@@ -7,8 +7,6 @@ const client = new Client({
     intents: ["GUILDS", "GUILDS","GUILD_MEMBERS","GUILD_BANS", "GUILD_EMOJIS_AND_STICKERS", "GUILD_INTEGRATIONS", "GUILD_INVITES", "GUILD_VOICE_STATES", "GUILD_PRESENCES", "GUILD_MESSAGES", "GUILD_MESSAGE_REACTIONS", "DIRECT_MESSAGES"]
 });
 const config = require('./config.json')
-const { Console } = require('console')
-var mysql = require('mysql');
 
 client.commands = new Collection()
 
@@ -26,8 +24,7 @@ events.forEach(event => {
 })
 
 process.on('exit', () => {
-  console.log('closing resources!')
-  browserlessFactory.close()
+  console.log('Stopping ASF Discord Bot!')
 })
 
 client.login(config.Bot.token)

@@ -1,7 +1,7 @@
 {
-  "name": "slash-handler",
+  "name": "asf-bot",
   "version": "1.0.0",
-  "description": "Discord.js V13 Slash Commands Handler",
+  "description": "ArchiSteamFarm UnOfficial Discord Bot",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
