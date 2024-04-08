@@ -23,13 +23,14 @@ fs.readFile('./configs/commands.json', 'utf8', (err, data) => {
                     config.secruity.GUILD_ID
                 ),
                 { body: [] }
-            );
-            await rest.put(
-                Routes.applicationGuildCommands(
-                    config.client.ID,
-                    config.secruity.GUILD_ID
-                ),
-                { body: commands }
+            ).then(
+                await rest.put(
+                    Routes.applicationGuildCommands(
+                        config.client.ID,
+                        config.secruity.GUILD_ID
+                    ),
+                    { body: commands }
+                )
             );
             process.exit(0);
 
