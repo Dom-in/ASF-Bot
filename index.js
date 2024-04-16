@@ -99,6 +99,11 @@ client.on('interactionCreate', async (interaction) => {
                         });
                         break;
 
+                case 'exit':
+                        interaction.reply({ embeds: [RconModuleEmbed] }).then(async (message) => {
+                                result = await IPCsend(interaction.commandName);
+                                await message.edit(result);
+                        });
         }
 });
 

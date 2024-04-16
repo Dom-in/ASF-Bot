@@ -96,5 +96,9 @@
     {
         "name": "update",
         "description": "Update ASF"
+    },
+    {
+        "name": "exit",
+        "description": "Ends ASF Process"
     }
 ]
