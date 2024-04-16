@@ -104,6 +104,7 @@ client.on('interactionCreate', async (interaction) => {
                                 result = await IPCsend(interaction.commandName);
                                 await message.edit(result);
                         });
+                        break;
         }
 });
 
