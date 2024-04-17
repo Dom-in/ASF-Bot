@@ -12,13 +12,14 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 //Can be Changed/Updated
 //commands with one optional botname argument
 const commandsopt1 = ['pause', 'resume', 'start', 'stop', 'status'];
-const BotVersion = 'v1.0.3';
+const BotVersion = 'v1.1.0';
 //Can be Changed/Updated
 
 
 client.once('ready', (c) => {
 
         console.log(`${getTime()} | [${c.user.username}] I am ready!`);
+        heartbeat();
 
 });
 
@@ -254,6 +255,57 @@ function IPCFormatCommands() {
         }
 
         return ({ embeds: [RconModuleEmbed] });
+}
+
+async function heartbeat() {
+        client.user.setActivity('ASF | pinging...', { type: Discord.ActivityType.WATCHING });
+        client.user.setStatus('idle');
+
+        setInterval(async () => {
+                try {
+                        let response = await fetch("https://" + config.secruity.IP + "/HealthCheck", {
+                                method: "get",
+                                headers: {
+                                        "Content-Type": "application/json",
+                                        "Authentication": config.secruity.IPC_PASSWORD
+                                }
+                        });
+                        if (response.status == 200) {
+                                if (client.user.presence.activities[0].name != 'ASF | Online') {
+                                        console.log(`${getTime()} | Server is online`);
+                                        client.user.setActivity('ASF | Online', { type: Discord.ActivityType.WATCHING });
+                                        client.user.setStatus('online');
+                                };
+                        } else if (response.status == 502) {
+                                if (client.user.presence.activities[0].name != 'ASF | booting...') {
+                                        console.log(`${getTime()} | Server is starting`);
+                                        client.user.setActivity('ASF | booting...', { type: Discord.ActivityType.WATCHING });
+                                        client.user.setStatus('idle');
+                                };
+                        } else {
+                                console.log(response);
+                        }
+
+                } catch (error) {
+                        if (error.code == 'ETIMEDOUT') {
+                                if (client.user.presence.activities[0].name != 'ASF | Offline') {
+                                        console.log(`${getTime()} | Server is offline`);
+                                        client.user.setActivity('ASF | Offline', { type: Discord.ActivityType.WATCHING });
+                                        client.user.setStatus('dnd');
+                                };
+                        } else if (error.code == 'ECONNREFUSED') {
+                                if (client.user.presence.activities[0].name != 'ASF | booting...') {
+                                        console.log(`${getTime()} | Server is starting`);
+                                        client.user.setActivity('ASF | booting...', { type: Discord.ActivityType.WATCHING });
+                                        client.user.setStatus('idle');
+                                };
+                        }
+                        else {
+                                console.error("Fetch error:", error);
+                        }
+
+                }
+        }, 10000);
 }
 
 
