@@ -270,11 +270,7 @@ async function heartbeat() {
         setInterval(async () => {
                 try {
                         let response = await fetch("https://" + config.secruity.IP + "/HealthCheck", {
-                                method: "get",
-                                headers: {
-                                        "Content-Type": "application/json",
-                                        "Authentication": config.secruity.IPC_PASSWORD
-                                }
+                                method: "get"
                         });
                         if (response.status == 200) {
                                 if (client.user.presence.activities[0].name != 'ASF | Online') {
