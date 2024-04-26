@@ -2,7 +2,7 @@ const { REST, Routes } = require('discord.js');
 const config = require('./configs/config.json');
 const fs = require('fs');
 
-const rest = new REST({ version: '10' }).setToken(config.client.token);
+const rest = new REST({ version: '10' }).setToken(config.bot.token);
 
 // Read the JSON file
 fs.readFile('./configs/commands.json', 'utf8', (err, data) => {
@@ -19,14 +19,14 @@ fs.readFile('./configs/commands.json', 'utf8', (err, data) => {
         try {
             await rest.put(
                 Routes.applicationGuildCommands(
-                    config.client.ID,
+                    config.bot.ID,
                     config.secruity.GUILD_ID
                 ),
                 { body: [] }
             ).then(
                 await rest.put(
                     Routes.applicationGuildCommands(
-                        config.client.ID,
+                        config.bot.ID,
                         config.secruity.GUILD_ID
                     ),
                     { body: commands }
