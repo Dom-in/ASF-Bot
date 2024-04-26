@@ -12,7 +12,7 @@ Free-Stuff-Bot support server:<br>
 So to start you have to configure youre config.json file
 ```
 {
-    "client" : {
+    "bot" : {
         "token" : "Bot token",
         "ID" : "Bot ID"
     },
