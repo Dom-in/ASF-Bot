@@ -13,6 +13,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 //commands with one optional botname argument
 const commandsopt1 = ['pause', 'resume', 'start', 'stop', 'status'];
 const BotVersion = 'v1.1.0';
+const TZ = 'Europe/Berlin';
 //Can be Changed/Updated
 
 
@@ -20,7 +21,6 @@ client.once('ready', (c) => {
 
         console.log(`${getTime()} | [${c.user.username}] I am ready!`);
         heartbeat();
-
 });
 
 
@@ -40,7 +40,7 @@ client.on('interactionCreate', async (interaction) => {
                 .setTimestamp(Date.now())
                 .setFooter({
                         text: `ASF-Bot ${BotVersion}`,
-                        iconURL: `https://cdn.discordapp.com/avatars/${config.client.ID}/${client.user.avatar}.webp?size=512`
+                        iconURL: `https://cdn.discordapp.com/avatars/${config.bot.ID}/${client.user.avatar}.webp?size=512`
                 });
 
         if (commandsopt1.includes(interaction.commandName)) {
@@ -50,7 +50,7 @@ client.on('interactionCreate', async (interaction) => {
                         } else {
                                 result = interaction.commandName;
                         }
-                        await message.edit(await IPCsend(result));
+                        await message.edit(await sendIPC(result));
                 });
         }
 
@@ -66,7 +66,7 @@ client.on('interactionCreate', async (interaction) => {
                 case 'commands':
                         interaction.reply({ embeds: [RconModuleEmbed] }).then(async (message) => {
 
-                                await message.edit(IPCFormatCommands());
+                                await message.edit(formatCommandsIPC());
                         });
                         break;
 
@@ -76,7 +76,7 @@ client.on('interactionCreate', async (interaction) => {
 
                 case 'version':
                         interaction.reply({ embeds: [RconModuleEmbed] }).then(async (message) => {
-                                result = await IPCsend(interaction.commandName);
+                                result = await sendIPC(interaction.commandName);
                                 await message.edit(result);
                         });
                         break;
@@ -87,22 +87,29 @@ client.on('interactionCreate', async (interaction) => {
                                 if (interaction.options.getString('botname') != null) {
                                         result = interaction.commandName + " " + interaction.options.getString('botname') + " " + interaction.options.getString('key');
                                 } else {
-                                        result = "addlicense asf " + interaction.options.getString('key');
+                                        result = interaction.commandName + " " + interaction.options.getString('key');
                                 }
-                                await message.edit(await IPCsend(result));
+                                await message.edit(await sendIPC(result));
+                        });
+                        break;
+
+                case 'addlicense':
+                        interaction.reply({ embeds: [RconModuleEmbed] }).then(async (message) => {
+                                result = interaction.commandName + " asf " + interaction.options.getString('appids');
+                                await message.edit(await sendIPC(result));
                         });
                         break;
 
                 case 'update':
                         interaction.reply({ embeds: [RconModuleEmbed] }).then(async (message) => {
-                                result = await IPCsend(interaction.commandName);
+                                result = await sendIPC(interaction.commandName);
                                 await message.edit(result);
                         });
                         break;
 
                 case 'exit':
                         interaction.reply({ embeds: [RconModuleEmbed] }).then(async (message) => {
-                                result = await IPCsend(interaction.commandName);
+                                result = await sendIPC(interaction.commandName);
                                 await message.edit(result);
                         });
                         break;
@@ -145,7 +152,7 @@ client.on("messageCreate", async (message) => {
                                                                 .setTimestamp(Date.now())
                                                                 .setFooter({
                                                                         text: `ASF-Bot ${BotVersion}`,
-                                                                        iconURL: `https://cdn.discordapp.com/avatars/${config.client.ID}/${client.user.avatar}.webp?size=512`
+                                                                        iconURL: `https://cdn.discordapp.com/avatars/${config.bot.ID}/${client.user.avatar}.webp?size=512`
                                                                 });
                                                         message.channel.send({ embeds: [RconModuleEmbed] });
 
@@ -179,63 +186,98 @@ client.on("messageCreate", async (message) => {
 });
 
 
-async function IPCsend(data) {
-        try {
-                let response = await fetch("https://" + config.secruity.IP + "/Api/Command", {
-                        method: "post",
-                        body: JSON.stringify({ Command: data }),
-                        headers: {
-                                "Content-Type": "application/json",
-                                "Authentication": config.secruity.IPC_PASSWORD
+async function sendIPC(data) {
+        if (client.user.presence.activities[0].name != 'ASF | Online') {
+                try {
+                        let response = await fetch("https://" + config.secruity.IP + "/HealthCheck", {
+                                method: "get",
+                        });
+
+                        if (response.status == 502) {
+                                console.log(`${getTime()} | Server is starting`);
+                                return (basicEmbed("Server is starting", '#FAA61A'));
                         }
-                });
-                let body = await response.json();
-                if (body.Success) {
 
-                        let lines = body.Result.split('\n');
-                        lines = lines.filter(line => line.trim() !== '');
-                        let result = lines.join(`\n${getTime()} | `);
-                        console.log(`${getTime()} | ` + result);
-
-                        const RconModuleEmbed = new Discord.EmbedBuilder()
-                                .setColor('#00ffff')
-                                .setAuthor({
-                                        name: "ASF-BOT Rcon Commands"
-                                })
-                                .setDescription(body.Result)
-                                .setTimestamp(Date.now())
-                                .setFooter({
-                                        text: `ASF-Bot ${BotVersion}`,
-                                        iconURL: `https://cdn.discordapp.com/avatars/${config.client.ID}/${client.user.avatar}.webp?size=512`
-                                });
-                        return ({ embeds: [RconModuleEmbed] });
-                } else {
-                        console.log("func Error:", body.title);
-                        console.log("func Status:", body.status);
-
-                        if (Array.isArray(body.errors)) {
-                                console.log("Validation Errors:");
-                                body.errors.forEach((error, index) => {
-                                        console.log(`Error ${index + 1}:`, error.message);
-                                        console.log("Field:", error.field); // If available, log the field related to the error
-                                        console.log("Details:", error.details); // If available, log additional details about the error
-                                });
+                } catch (error) {
+                        if (error.code == 'ETIMEDOUT') {
+                                console.log(`${getTime()} | Server is offline`);
+                                return (basicEmbed("Server is offline", '#F04747'));
+                        } else if (error.code == 'ECONNREFUSED') {
+                                console.log(`${getTime()} | Server is starting`);
+                                const RconModuleEmbed = new Discord.EmbedBuilder()
+                                        .setColor('#FAA61A')
+                                        .setAuthor({
+                                                name: "ASF-BOT Rcon Commands"
+                                        })
+                                        .setDescription("Server is starting")
+                                        .setTimestamp(Date.now())
+                                        .setFooter({
+                                                text: `ASF-Bot ${BotVersion}`,
+                                                iconURL: `https://cdn.discordapp.com/avatars/${config.bot.ID}/${client.user.avatar}.webp?size=512`
+                                        });
+                                return ({ embeds: [RconModuleEmbed] });
                         } else {
-                                console.log("Unknown validation error occurred");
+                                console.error("Fetch error:", error);
+                        }
+                }
+        } else {
+                try {
+                        let response = await fetch("https://" + config.secruity.IP + "/Api/Command", {
+                                method: "post",
+                                body: JSON.stringify({ Command: data }),
+                                headers: {
+                                        "Content-Type": "application/json",
+                                        "Authentication": config.secruity.IPC_PASSWORD
+                                }
+                        });
+                        let body = await response.json();
+                        if (body.Success) {
+
+                                let lines = body.Result.split('\n');
+                                lines = lines.filter(line => line.trim() !== '');
+                                let result = lines.join(`\n${getTime()} | `);
+                                console.log(`${getTime()} | ` + result);
+
+                                const RconModuleEmbed = new Discord.EmbedBuilder()
+                                        .setColor('#00ffff')
+                                        .setAuthor({
+                                                name: "ASF-BOT Rcon Commands"
+                                        })
+                                        .setDescription(body.Result)
+                                        .setTimestamp(Date.now())
+                                        .setFooter({
+                                                text: `ASF-Bot ${BotVersion}`,
+                                                iconURL: `https://cdn.discordapp.com/avatars/${config.bot.ID}/${client.user.avatar}.webp?size=512`
+                                        });
+                                return ({ embeds: [RconModuleEmbed] });
+                        } else {
+                                console.log("func Error:", body.title);
+                                console.log("func Status:", body.status);
+
+                                if (Array.isArray(body.errors)) {
+                                        console.log("Validation Errors:");
+                                        body.errors.forEach((error, index) => {
+                                                console.log(`Error ${index + 1}:`, error.message);
+                                                console.log("Field:", error.field); // If available, log the field related to the error
+                                                console.log("Details:", error.details); // If available, log additional details about the error
+                                        });
+                                } else {
+                                        console.log("Unknown validation error occurred");
+                                }
+
+                                console.log("Trace ID:", body.traceId);
                         }
 
-                        console.log("Trace ID:", body.traceId);
+
+                } catch (error) {
+                        // Handle fetch or network-related errors
+                        console.error("Fetch error:", error);
                 }
-
-
-        } catch (error) {
-                // Handle fetch or network-related errors
-                console.error("Fetch error:", error);
         }
 }
 
 
-function IPCFormatCommands() {
+function formatCommandsIPC() {
         // Read the commands from the JSON file
         const commands = JSON.parse(fs.readFileSync('./configs/commands.json', 'utf8'));
 
@@ -245,7 +287,7 @@ function IPCFormatCommands() {
                 .setTimestamp(Date.now())
                 .setFooter({
                         text: `ASF-Bot ${BotVersion}`,
-                        iconURL: `https://cdn.discordapp.com/avatars/${config.client.ID}/${client.user.avatar}.webp?size=512`
+                        iconURL: `https://cdn.discordapp.com/avatars/${config.bot.ID}/${client.user.avatar}.webp?size=512`
                 });
 
         // Iterate through the commands and add them as fields
@@ -310,12 +352,26 @@ async function heartbeat() {
         }, 10000);
 }
 
+function basicEmbed(description, color) {
+        let embed = new Discord.EmbedBuilder()
+                .setColor(color)
+                .setAuthor({
+                        name: "ASF-BOT Rcon Commands"
+                })
+                .setDescription(description)
+                .setTimestamp(Date.now())
+                .setFooter({
+                        text: `ASF-Bot ${BotVersion}`,
+                        iconURL: `https://cdn.discordapp.com/avatars/${config.bot.ID}/${client.user.avatar}.webp?size=512`
+                });
+        return{ embeds: [embed] }
+}
 
 function getTime(ms) {
-        const now = DateTime.local().setZone('Europe/Berlin');
+        const now = DateTime.local().setZone(TZ);
         const newTime = now.plus({ milliseconds: ms });
         const formattedTime = newTime.toFormat('[dd HH:mm:ss]');
         return formattedTime
 };
 
-client.login(config.client.token);
+client.login(config.bot.token);

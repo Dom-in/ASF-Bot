@@ -1,5 +1,5 @@
 {
-    "client" : {
+    "bot" : {
         "token" : "Bot token",
         "ID" : "Bot ID"
     },
