@@ -1,5 +1,7 @@
 # ASF-Bot
 
+* This bot is updated by Mr.Zero. Me as the creator decided to work on v2 of the bot [Version 2.0](https://github.com/Dom-in/ASF-Bot/tree/v2) its still in development but tis made to be better than version i as the creator made before Mr.Zero updates. Big thanks to him to keep this updated!
+
 ### Discord Bot coded in JavaScript to control your ASF instance.
 Control your ASF instance by discord.
 
