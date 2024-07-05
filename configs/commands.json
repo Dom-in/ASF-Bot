@@ -34,6 +34,18 @@
         ]
     },
     {
+        "name": "addlicense",
+        "description": "add a license to your steam accounts",
+        "options": [
+            {
+                "name": "appids",
+                "description": "The appids to add",
+                "type": 3,
+                "required": true
+            }
+        ]
+    },
+    {
         "name": "pause",
         "description": "Pause ASF Bot",
         "options": [
@@ -96,5 +108,9 @@
     {
         "name": "update",
         "description": "Update ASF"
+    },
+    {
+        "name": "exit",
+        "description": "Ends ASF Process"
     }
 ]
