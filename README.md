@@ -28,7 +28,8 @@ So to start you have to configure youre config.json file
         "ID": "1041398379667804193",
         "CHANNEL_ID": "FreeStuff Bot channel ID"
     }
-}
+},
+    "TZ" : "Put your Timezone here (luxon)"
 ```
 
 Run run.js for the Bot to start.
