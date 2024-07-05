@@ -13,7 +13,6 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 //commands with one optional botname argument
 const commandsopt1 = ['pause', 'resume', 'start', 'stop', 'status'];
 const BotVersion = 'v1.1.0';
-const TZ = 'Europe/Berlin';
 //Can be Changed/Updated
 
 
@@ -190,7 +189,7 @@ async function sendIPC(data) {
         if (client.user.presence.activities[0].name != 'ASF | Online') {
                 try {
                         let response = await fetch("https://" + config.secruity.IP + "/HealthCheck", {
-                                method: "get",
+                                method: "get"
                         });
 
                         if (response.status == 502) {
@@ -368,7 +367,7 @@ function basicEmbed(description, color) {
 }
 
 function getTime(ms) {
-        const now = DateTime.local().setZone(TZ);
+        const now = DateTime.local().setZone(config.TZ);
         const newTime = now.plus({ milliseconds: ms });
         const formattedTime = newTime.toFormat('[dd HH:mm:ss]');
         return formattedTime

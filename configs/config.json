@@ -12,5 +12,6 @@
     "fsbot" : {
         "ID": "1041398379667804193",
         "CHANNEL_ID": "FreeStuff Bot channel ID"
-    }
+    },
+    "TZ" : "Europe/Berlin"
 }
