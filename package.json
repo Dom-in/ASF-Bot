@@ -20,6 +20,6 @@
     "asf-bot": "file:",
     "discord.js": "^14.16.3",
     "luxon": "^3.5.0",
-    "node-fetch": "^3.3.2"
+    "node-fetch": "2.6.7"
   }
 }
