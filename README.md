@@ -4,8 +4,6 @@
 
 #### (and automatically redeem free game promotions and steam points)
 
-### Discord Bot coded in JavaScript to control your ASF instance.
-
 Control your ASF instance by discord.
 
 ASF support server:<br>
