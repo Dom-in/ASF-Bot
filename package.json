@@ -1,17 +1,25 @@
 {
   "name": "asf-bot",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "2.0.0",
+  "description": "ArchiSteamFarm discord bot for controlling your bots, automated redeeming of free steam game promotions and steam points",
+  "main": "run.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node index.js"
   },
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zerox003/ASF-Bot.git"
+  },
+  "author": "zerox003",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zerox003/ASF-Bot/issues"
+  },
+  "homepage": "https://github.com/zerox003/ASF-Bot#readme",
   "dependencies": {
-    "discord.js": "^14.11.0",
-    "enmap": "^5.8.7",
-    "node-fetch": "^2.6.5",
-    "requirements": "^1.4.1"
+    "asf-bot": "file:",
+    "discord.js": "^14.16.3",
+    "luxon": "^3.5.0",
+    "node-fetch": "2.6.7"
   }
 }
