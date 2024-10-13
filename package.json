@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "asf-bot": "file:",
     "discord.js": "^14.11.0",
     "enmap": "^5.8.7",
     "node-fetch": "^2.6.5",
